@@ -1,0 +1,10 @@
+# Ruido del SO / editores
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Progreso local de skills (no versionar estado por máquina)
+muscle-memory/progress/
+muscle-memory/**/progress.json
+.scratch/
