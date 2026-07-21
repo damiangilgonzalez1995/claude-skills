@@ -4,10 +4,11 @@ Thumbs.db
 *.swp
 *~
 
-# Progreso local de skills (no versionar estado por máquina)
-muscle-memory/progress/
-muscle-memory/**/progress.json
-.scratch/
+# Cachés de Python / test / estado de skills (no versionar estado por máquina)
+__pycache__/
+*.pyc
+.pytest_cache/
+.superpowers/
 
-# muscle-memory es su propio repo git independiente
-muscle-memory/
+# Scratch
+.scratch/
