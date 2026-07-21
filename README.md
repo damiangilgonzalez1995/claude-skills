@@ -23,8 +23,3 @@ proyectos. Las skills que además se usan en un proyecto concreto (p. ej.
 | `muscle-memory` | Gimnasio de katas de práctica en Python. |
 | `claude-project-setup` | Inicializa/configura un repo para Claude Code. |
 
-## Origen
-
-Varias skills de ingeniería están portadas y traducidas al español desde
-[`mattpocock/skills`](https://github.com/mattpocock/skills), adaptando sus
-referencias cruzadas y el issue tracker al repo de destino.
