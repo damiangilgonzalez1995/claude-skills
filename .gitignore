@@ -8,3 +8,6 @@ Thumbs.db
 muscle-memory/progress/
 muscle-memory/**/progress.json
 .scratch/
+
+# muscle-memory es su propio repo git independiente
+muscle-memory/
