@@ -1,7 +1,17 @@
 ---
 name: tastemaker
 version: 1.0.0
-description: Genera UI genuinamente bonita y coherente con la marca en vez de la bazofia generica de IA. Usar siempre que se pida construir, disenar, estilizar o mejorar una UI, landing, dashboard, pantalla de app o componente; cuando un PRD necesite una pasada de diseno antes de implementar; cuando el usuario pegue imagenes o enlaces de referencia y quiera que la app se parezca a ellos; o cuando se queje de que la UI generada parece generica, aburrida, de plantilla o "como todas las apps de IA". Dispara tambien sin la palabra "diseno": "que esto quede bien", "hazme el frontend de X", "esto parece otra web de SaaS mas", "cógeme este rollo". Tambien con los verbos "estudia" / "extrae el look de" una captura o URL, y "audita" / "revisa" / "por que parece hecho con IA".
+description: >-
+  Genera UI genuinamente bonita y coherente con la marca en vez de la bazofia
+  generica de IA. Usar siempre que se pida construir, disenar, estilizar o mejorar
+  una UI, landing, dashboard, pantalla de app o componente; cuando un PRD necesite
+  una pasada de diseno antes de implementar; cuando el usuario pegue imagenes o
+  enlaces de referencia y quiera que la app se parezca a ellos; o cuando se queje de
+  que la UI generada parece generica, aburrida, de plantilla o como todas las apps
+  de IA. Dispara tambien sin la palabra diseno, con frases como "que esto quede
+  bien", "hazme el frontend de X", "esto parece otra web de SaaS mas" o "cogeme
+  este rollo". Tambien con los verbos estudiar o extraer el look de una captura o
+  URL, y auditar o revisar por que algo parece hecho con IA.
 ---
 
 # Tastemaker
