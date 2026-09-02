@@ -1,13 +1,50 @@
 # claude-skills
 
-Biblioteca personal de skills de Claude Code de Damián. Fuente de verdad global,
-clonada en `~/.claude/skills/` para estar disponible en todos los proyectos.
+Biblioteca personal de skills de Claude Code de Damián.
 
-> **Por qué las carpetas de skill están planas y no agrupadas por categoría**
+## Estructura
+
+Las skills están agrupadas por la fase del trabajo en la que se usan:
+
+```
+0-antes-de-empezar/   wayfinder, grilling, grill-with-docs, grill-me,
+                      research, domain-modeling
+1-definir/            to-spec, to-tickets, prototype
+2-construir/          implement
+3-interfaz/           ingeniero-diseno-web, diseno-landing, sitios-calidad-premio,
+                      animar, diseno-apple, las seis mejor-*, tastemaker,
+                      leyes-de-percepcion, leyes-de-retencion,
+                      vocabulario-animacion, video-a-superprompt
+4-revisar/            code-review, revision-interfaz, revision-de-cambios
+5-cerrar-sesion/      handoff
+9-otras/              teach, muscle-memory, claude-project-setup,
+                      writing-for-agents, wait-what, to-questionnaire
+docs/                 una guía por fase
+instalar.py           copia las skills a ~/.claude/skills
+```
+
+## Instalación
+
+```bash
+git clone https://github.com/damiangilgonzalez1995/claude-skills.git
+cd claude-skills
+python instalar.py
+```
+
+> **Por qué hace falta un instalador y no basta con clonar en `~/.claude/skills`**
 > Claude Code descubre las skills personales en `~/.claude/skills/<nombre>/SKILL.md`,
-> a un solo nivel. Meterlas en subcarpetas de categoría hace que dejen de cargar.
-> La clasificación vive por tanto en este README y en [`docs/`](docs/), no en el
-> árbol de directorios.
+> **a un solo nivel**. Una skill dentro de una subcarpeta de categoría no se
+> descubre: al invocarla responde `Unknown skill` (comprobado, no supuesto).
+>
+> Por eso el repo va organizado en carpetas y el instalador lo **aplana** al
+> copiarlo: `3-interfaz/animar/` acaba en `~/.claude/skills/animar/`.
+>
+> Consecuencia: `~/.claude/skills/` es **salida generada**, no fuente de verdad.
+> Edita siempre aquí y vuelve a instalar. Lo que edites allí se pierde en la
+> siguiente instalación.
+
+`python instalar.py --dry-run` dice qué haría sin tocar nada.
+`--limpiar` borra además del destino las skills que ya no estén en el repo.
 
 ---
 
@@ -68,13 +105,13 @@ flowchart TD
 
 | Fase | Skills | Documento |
 |---|---|---|
-| **0 · Antes de escribir nada** | `wayfinder` `grilling` `grill-with-docs` `research` `domain-modeling` | [`docs/00-antes-de-empezar.md`](docs/00-antes-de-empezar.md) |
+| **0 · Antes de escribir nada** | `wayfinder` `grilling` `grill-with-docs` `grill-me` `research` `domain-modeling` | [`docs/00-antes-de-empezar.md`](docs/00-antes-de-empezar.md) |
 | **1 · Definir** | `to-spec` `to-tickets` `prototype` | [`docs/01-definir.md`](docs/01-definir.md) |
 | **2 · Construir** | `implement` | [`docs/02-construir.md`](docs/02-construir.md) |
-| **3 · Interfaz** | `ingeniero-diseno-web` `diseno-landing` `sitios-calidad-premio` `animar` `diseno-apple` las seis `mejor-*` `tastemaker` `leyes-de-percepcion` `leyes-de-retencion` | [`docs/03-interfaz.md`](docs/03-interfaz.md) |
+| **3 · Interfaz** | `ingeniero-diseno-web` `diseno-landing` `sitios-calidad-premio` `animar` `diseno-apple` las seis `mejor-*` `tastemaker` `leyes-de-percepcion` `leyes-de-retencion` `vocabulario-animacion` `video-a-superprompt` | [`docs/03-interfaz.md`](docs/03-interfaz.md) |
 | **4 · Revisar** | `code-review` `revision-interfaz` `revision-de-cambios` | [`docs/04-revisar.md`](docs/04-revisar.md) |
 | **5 · Cerrar sesión** | `handoff` | [`docs/05-cerrar-sesion.md`](docs/05-cerrar-sesion.md) |
-| **Fuera del flujo** | `teach` `muscle-memory` `vocabulario-animacion` `video-a-superprompt` `claude-project-setup` `writing-for-agents` `wait-what` `to-questionnaire` `grill-me` | [`docs/99-sueltas.md`](docs/99-sueltas.md) |
+| **Otras** | `teach` `muscle-memory` `claude-project-setup` `writing-for-agents` `wait-what` `to-questionnaire` | [`docs/99-sueltas.md`](docs/99-sueltas.md) |
 
 **La regla corta:** decide **qué** antes de **cómo se ve**, y **cómo se ve** antes de
 **cómo se mueve**. Revisar va al final, siempre.
@@ -141,11 +178,9 @@ Cuál usar de las que se solapan, en [`docs/03-interfaz.md`](docs/03-interfaz.md
 
 ---
 
-## Instalación en otra máquina
-
-```bash
-git clone https://github.com/damiangilgonzalez1995/claude-skills.git ~/.claude/skills
-```
+## Otros destinos
 
 Para un proyecto concreto, copia la carpeta de la skill a su `.claude/skills/` y
-commitea. Para claude.ai hay que subirlas como `.zip`, una a una.
+commitea: ahí sí viaja con el repo y la ven las sesiones en la nube.
+
+Para claude.ai hay que subirlas como `.zip`, una a una.

@@ -1,6 +1,8 @@
-# Fuera del flujo
+# Otras
 
 Skills que no encajan en la cadena idea → código, porque resuelven otra cosa.
+
+Viven en [`9-otras/`](../9-otras/).
 
 ---
 
@@ -27,23 +29,44 @@ rompen en el navegador.
 
 ---
 
-## Utilidades de diseño
+## Conducir la conversación
 
-### `vocabulario-animacion`
+### `wait-what`
 
-Le describes un efecto sin saber cómo se llama ("eso que rebota al abrirse un
-popover", "el scroll elástico de iOS") y te da el término exacto, en inglés, que es
-el vocabulario con el que se le pide a una IA o a un diseñador.
+**Cuándo.** El último mensaje no ha calado. Te has perdido, o la respuesta va por un
+sitio que no reconoces.
 
-No diseña ni construye: nombra.
+**Qué hace.** Para y pide que se replantee: con contexto, en frases cortas de una
+idea cada una, y usando el vocabulario del proyecto.
 
-### `video-a-superprompt`
+**Por qué existe.** Es más barato cortar en cuanto se pierde el hilo que dejar que la
+conversación siga tres mensajes construyendo sobre un malentendido.
 
-Le pasas la grabación de una web que te gusta y te devuelve un prompt de recreación
-detallado: anatomía sección a sección, sistema de movimiento, mapa de assets,
-comportamiento en móvil y con movimiento reducido.
+```
+/wait-what
+```
 
-**Necesita `ffmpeg`** en el PATH: `winget install Gyan.FFmpeg`.
+No lleva argumentos. Es un freno de mano.
+
+### `to-questionnaire`
+
+**Cuándo.** Hay una decisión que **no puedes responder tú solo**: depende de lo que
+sepa un cliente, un comercial, un responsable de producto.
+
+**Qué hace.** Convierte esa decisión en un cuestionario en Markdown, para mandárselo
+a esa persona y que lo rellene por su cuenta, o para recorrerlo juntos en una reunión.
+
+**Por qué importa.** Evita el bloqueo de "esto no lo sé", y evita también su
+alternativa mala, que es decidirlo tú y descubrir en la demo que estaba mal.
+
+```
+/to-questionnaire
+
+Necesito saber cómo factura INNOVA las OT de mantenimiento preventivo.
+```
+
+Encaja de forma natural detrás de un ticket de `wayfinder` que se queda bloqueado por
+falta de información.
 
 ---
 
@@ -60,13 +83,5 @@ Cómo escribir documentos que va a consumir un agente. Se usa al crear o editar 
 skill, o al modificar `CLAUDE.md` o `AGENTS.md`.
 
 Es la meta-skill: la que se usa para escribir las demás.
-
----
-
-## Sin clasificar
-
-`wait-what`, `to-questionnaire` y `grill-me` están en el repo sin documentar aquí.
-Si alguna de las tres se usa de verdad, merece su hueco en el flujo; si no, tocaría
-borrarla.
 
 **Volver al índice:** [README](../README.md)

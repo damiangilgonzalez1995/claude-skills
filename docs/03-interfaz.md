@@ -69,6 +69,14 @@ la necesitas.
 No construye nada. Le describes un efecto ("eso que rebota al abrirse") y te da el
 término exacto para poder pedirlo bien.
 
+### `video-a-superprompt`
+
+Le pasas la grabación de una web que te gusta y te devuelve un prompt de recreación
+detallado: anatomía sección a sección, sistema de movimiento, mapa de assets y
+comportamiento en móvil y con movimiento reducido.
+
+**Necesita `ffmpeg`** en el PATH: `winget install Gyan.FFmpeg`.
+
 ---
 
 ## Paso 4 · Pulido, las seis de dominio

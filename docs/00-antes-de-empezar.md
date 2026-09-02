@@ -51,6 +51,10 @@ Voy a migrar el estado del frontend a un store global. Ponme a prueba.
 concreta, cuando la discusión depende de cómo funciona de verdad una herramienta y
 no de opiniones.
 
+**Variante:** `grill-me` es el atajo. Solo `/grill-me`, sin argumentos: llama a
+`grilling` sobre lo que estéis discutiendo en ese momento, sin que tengas que
+reformular el plan.
+
 ---
 
 ## `research`
@@ -101,6 +105,7 @@ En ATI, "incidencia", "parte", "OT" y "tarea" se usan mezclados. Fija el vocabul
 | Ya tengo un plan y quiero que lo destroces | `grilling` |
 | Me falta un dato y no me lo quiero inventar | `research` |
 | Tenemos lío con los nombres | `domain-modeling` |
+| Estamos discutiendo algo ahora mismo y quiero que lo ataques | `grill-me` |
 
 No son excluyentes. Lo normal en algo grande es `wayfinder` primero, y luego
 `research` o `grilling` dentro de cada ticket del mapa.
