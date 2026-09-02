@@ -2,26 +2,25 @@
 
 Biblioteca personal de skills de Claude Code de Damián.
 
-## Estructura
+El flujo sigue el método **spec-driven development**: la fuente de verdad es un
+documento escrito, no un mensaje de chat. Primero se especifica, se aclara lo que
+queda abierto y se trocea; después se implementa; al final se revisa contra lo
+especificado.
 
-Las skills están agrupadas por la fase del trabajo en la que se usan:
+![Vista general del flujo](docs/img/00-flujo.svg)
 
-```
-0-antes-de-empezar/   wayfinder, grilling, grill-with-docs, research
-                      (+ domain-modeling y grill-me, que usa grill-with-docs)
-1-definir/            to-spec, to-tickets, prototype
-2-construir/          implement
-3-interfaz/           ingeniero-diseno-web, diseno-landing, sitios-calidad-premio,
-                      animar, diseno-apple, las seis mejor-*, tastemaker,
-                      leyes-de-percepcion, leyes-de-retencion,
-                      vocabulario-animacion, video-a-superprompt
-4-revisar/            code-review, revision-interfaz, revision-de-cambios
-5-cerrar-sesion/      handoff
-9-otras/              teach, muscle-memory, claude-project-setup,
-                      writing-for-agents, wait-what, to-questionnaire
-docs/                 una guía por fase
-instalar.py           copia las skills a ~/.claude/skills
-```
+| Fase | Qué pasa ahí | Documento |
+|---|---|---|
+| **1 · Planificar** | Spec, aclarar los huecos, plan y tickets. Sale un ticket, no una idea. | [`docs/1-planificar.md`](docs/1-planificar.md) |
+| **2 · Backend** | Implementar lo que no se ve. | [`docs/2-backend.md`](docs/2-backend.md) |
+| **3 · Frontend** | La cadena de diseño, de la dirección al pulido. | [`docs/3-frontend.md`](docs/3-frontend.md) |
+| **4 · Revisar y cerrar** | Revisión, con caminos distintos según back o front, y traspaso. | [`docs/4-revisar-y-cerrar.md`](docs/4-revisar-y-cerrar.md) |
+| **9 · Otras** | Lo que no encaja en el flujo. | [`docs/9-otras.md`](docs/9-otras.md) |
+
+**La regla corta:** decide **qué** antes de **cómo se ve**, y **cómo se ve** antes de
+**cómo se mueve**. Revisar va al final, siempre.
+
+---
 
 ## Instalación
 
@@ -36,109 +35,101 @@ python instalar.py
 > **a un solo nivel**. Una skill dentro de una subcarpeta de categoría no se
 > descubre: al invocarla responde `Unknown skill` (comprobado, no supuesto).
 >
-> Por eso el repo va organizado en carpetas y el instalador lo **aplana** al
-> copiarlo: `3-interfaz/animar/` acaba en `~/.claude/skills/animar/`.
+> Por eso el repo va organizado en carpetas y el instalador lo **aplana** al copiarlo:
+> `3-frontend/animar/` acaba en `~/.claude/skills/animar/`.
 >
-> Consecuencia: `~/.claude/skills/` es **salida generada**, no fuente de verdad.
-> Edita siempre aquí y vuelve a instalar. Lo que edites allí se pierde en la
-> siguiente instalación.
+> Consecuencia: `~/.claude/skills/` es **salida generada**, no fuente de verdad. Edita
+> siempre aquí y vuelve a instalar. Lo que edites allí se pierde.
 
 `python instalar.py --dry-run` dice qué haría sin tocar nada.
-`--limpiar` borra además del destino las skills que ya no estén en el repo.
+`--limpiar` borra además del destino lo que ya no esté en el repo.
 
 ---
 
-## El flujo
+## Las skills
 
-Vista general. Cada fase tiene su documento con su propio diagrama y el detalle.
-
-```mermaid
-flowchart LR
-    F0["0 · Antes de empezar"] --> F1["1 · Definir"]
-    F1 --> Q{"Backend<br/>o frontend?"}
-    Q -->|backend| F2["2 · Backend"]
-    Q -->|frontend| F3["3 · Frontend"]
-    F2 --> F4["4 · Revisar"]
-    F3 --> F4
-    F4 --> F5["5 · Cerrar sesión"]
-    F5 -.siguiente sesión.-> F1
-```
-
-| Fase | Documento | De qué va |
-|---|---|---|
-| **0 · Antes de empezar** | [`docs/00-antes-de-empezar.md`](docs/00-antes-de-empezar.md) | Certeza sobre qué construir, antes de escribir nada |
-| **1 · Definir** | [`docs/01-definir.md`](docs/01-definir.md) | Spec y tickets: convertir lo decidido en algo implementable |
-| **2 · Backend** | [`docs/02-backend.md`](docs/02-backend.md) | Implementar la parte que no se ve |
-| **3 · Frontend** | [`docs/03-frontend.md`](docs/03-frontend.md) | La cadena de interfaz, de la dirección al pulido |
-| **4 · Revisar** | [`docs/04-revisar.md`](docs/04-revisar.md) | Dos caminos distintos según sea back o front |
-| **5 · Cerrar sesión** | [`docs/05-cerrar-sesion.md`](docs/05-cerrar-sesion.md) | Traspaso para no perder el contexto |
-| **Otras** | [`docs/99-otras.md`](docs/99-otras.md) | Lo que no encaja en la cadena |
-
-**La regla corta:** decide **qué** antes de **cómo se ve**, y **cómo se ve** antes de
-**cómo se mueve**. Revisar va al final, siempre.
-
-## Las tres del principio, que son las que más se saltan
-
-| Skill | Cuándo | Qué te ahorra |
-|---|---|---|
-| `wayfinder` | El trabajo no cabe en una sesión | Que a la tercera sesión ya nadie sepa qué falta |
-| `grilling` | Tienes un plan y te gusta demasiado | Construir tres días la cosa equivocada |
-| `to-spec` + `to-tickets` | Antes de tocar código | Un PR de cuarenta ficheros que nadie puede revisar |
-
----
-
-## Skills de ingeniería
+### 1 · Planificar
 
 | Skill | Qué hace |
 |---|---|
-| `wayfinder` | Planifica un esfuerzo enorme (más de una sesión) como un mapa de tickets de decisión que se resuelven de uno en uno. Solo `/wayfinder`. |
-| `grilling` | Interroga sin tregua un plan, decisión o idea. |
-| `grill-with-docs` | `grilling` + `domain-modeling`: interroga el plan y va escribiendo los ADRs y el glosario. La que conviene usar por defecto. |
-| `research` | Investiga contra fuentes primarias y deja los hallazgos como Markdown en el repo. |
-| `to-spec` | Convierte una idea o petición en una spec. |
-| `to-tickets` | Descompone una spec en tickets accionables. |
-| `prototype` | Prototipo desechable para responder una pregunta de diseño. |
-| `implement` | Ejecuta la implementación de un ticket o plan. |
-| `code-review` | Revisa cambios desde un punto fijo en dos ejes: Estándares y Spec, en subagentes paralelos. |
-| `handoff` | Compacta la conversación en un documento de traspaso. |
-| `claude-project-setup` | Inicializa y configura un repo para Claude Code. |
-| `teach` | Explicación didáctica. |
-| `muscle-memory` | Gimnasio de katas de práctica en Python. |
+| `claude-project-setup` | La constitución del proyecto: `CLAUDE.md`, reglas, comandos, agentes. Una vez por repo. |
+| `to-spec` | Convierte la idea en una spec: el qué y el porqué. |
+| `research` | Investiga contra fuentes primarias y deja el hallazgo escrito y fechado. |
+| `to-questionnaire` | Convierte una decisión que no puedes tomar tú solo en un cuestionario para quien sí sabe. |
+| `prototype` | Prototipo desechable para responder una duda de diseño. |
+| `grill-with-docs` | Interroga el plan y va escribiendo los ADRs y el glosario. La que conviene por defecto. |
+| `wayfinder` | Solo si no cabe en una sesión: mapa de tickets de decisión. `/wayfinder`. |
+| `to-tickets` | Trocea la spec en tickets de una sentada. |
 
-## Skills de diseño
+`grilling`, `grill-me` y `domain-modeling` están instaladas pero no hace falta
+invocarlas: van dentro de `grill-with-docs`.
 
-Portadas y traducidas al español desde repos públicos. Los `SKILL.md` están en
-español; los ficheros de `references/` y los `scripts/` se conservan en inglés a
-propósito, porque los propios `SKILL.md` los citan por ruta.
+### 2 · Backend
+
+| Skill | Qué hace |
+|---|---|
+| `implement` | Ejecuta un ticket. Uno, no varios. |
+
+### 3 · Frontend
 
 | Skill | Qué hace | Origen |
 |---|---|---|
 | `ingeniero-diseno-web` | Dirige la obra: dirección de arte, design system declarado, puntos de control y crítica con nota. 25 recetas de estilo ancladas. | Garden (ConardLi) |
-| `diseno-landing` | Landing de conversión de punta a punta: estructura y textos (Parte A) más el sistema visual innegociable (Parte B). | Elaya |
-| `sitios-calidad-premio` | Sitios cinematográficos: GSAP, un único motor de scroll suave, Three.js solo con propósito, assets honestos. | Meng To |
-| `animar` | Construye una animación decidiendo en orden: si debe animarse, con qué propósito, herramienta, propiedades, curva y duración. | Emil Kowalski |
-| `diseno-apple` | Movimiento fluido y físico: muelles, interrumpibilidad, traspaso de velocidad, materiales, tipografía óptica. | Emil Kowalski |
-| `mejor-layout` | Agrupación, alineación, orden de lectura, breakpoints, crecimiento de textos traducidos, RTL. | Jakub Krehel |
-| `mejor-tipografia` | Escala, interlineado, fuentes variables, OpenType, wrapping, truncado, puntuación. | Jakub Krehel |
-| `mejor-colores` | Rampas, tokens semánticos, contraste medido, modo oscuro, interpolación de degradados. | Jakub Krehel |
-| `mejor-accesibilidad` | Nativo antes que ARIA, foco, teclado, áreas de pulsación, formularios, regiones vivas. | Jakub Krehel |
-| `mejor-ui` | Radios concéntricos, alineación óptica, superficies, transiciones de iconos, escala al pulsar. | Jakub Krehel |
+| `diseno-landing` | Landing de conversión de punta a punta: estructura y textos, más el sistema visual innegociable. | Elaya |
+| `sitios-calidad-premio` | Sitios cinematográficos: GSAP, un único motor de scroll suave, Three.js solo con propósito. | Meng To |
+| `animar` | Decide en orden si debe animarse, con qué propósito, herramienta, propiedades, curva y duración. | Emil Kowalski |
+| `diseno-apple` | Movimiento fluido y físico: muelles, interrumpibilidad, traspaso de velocidad, materiales. | Emil Kowalski |
+| `mejor-layout` | Agrupación, alineación, orden de lectura, breakpoints, RTL. | Jakub Krehel |
+| `mejor-tipografia` | Escala, interlineado, fuentes variables, wrapping, truncado, puntuación. | Jakub Krehel |
+| `mejor-colores` | Rampas, tokens semánticos, contraste medido, modo oscuro. | Jakub Krehel |
+| `mejor-accesibilidad` | Nativo antes que ARIA, foco, teclado, áreas de pulsación, formularios. | Jakub Krehel |
+| `mejor-ui` | Radios concéntricos, alineación óptica, superficies, transiciones de iconos. | Jakub Krehel |
 | `mejor-redaccion` | Voz y tono, botones con verbo, errores que dicen cómo arreglarlo, estados vacíos. | Jakub Krehel |
-| `tastemaker` | Que no parezca hecho por IA: color medido de píxeles reales, paletas generadas, rotación de estructura, memoria de gusto. | codeswithroh |
-| `leyes-de-percepcion` | Gestalt en interfaz: proximidad, similitud, región común, cierre, continuidad, figura-fondo, Von Restorff, jerarquía. | Owl-Listener |
-| `leyes-de-retencion` | Por qué se abandona un flujo: Hick, Fitts, Miller, Jakob, Doherty, Zeigarnik, posición serial, pico-final, Tesler. | Owl-Listener |
-| `revision-interfaz` | Orquesta las seis `mejor-*` en una revisión consolidada con severidad y veredicto. | Jakub Krehel |
-| `revision-de-cambios` | Revisa un cambio (rama, PR, rango), lee las líneas eliminadas y clasifica cada hallazgo. | Jakub Krehel |
+| `tastemaker` | Que no parezca hecho por IA: color medido de píxeles, paletas generadas, rotación de estructura. | codeswithroh |
+| `leyes-de-percepcion` | Gestalt en interfaz: proximidad, similitud, figura-fondo, Von Restorff, jerarquía. | Owl-Listener |
+| `leyes-de-retencion` | Por qué se abandona un flujo: Hick, Fitts, Miller, Jakob, Doherty, Zeigarnik, pico-final, Tesler. | Owl-Listener |
 | `vocabulario-animacion` | Glosario inverso: convierte "eso que rebota al abrirse" en el término exacto. | Emil Kowalski |
 | `video-a-superprompt` | Convierte un vídeo de referencia en un prompt de recreación detallado. | Meng To |
 
-Cuál usar de las que se solapan, en [`docs/03-frontend.md`](docs/03-frontend.md).
+Las de diseño están traducidas al español. Los ficheros de `references/` y los
+`scripts/` se conservan en inglés a propósito, porque los propios `SKILL.md` los
+citan por ruta.
+
+### 4 · Revisar y cerrar
+
+| Skill | Qué hace |
+|---|---|
+| `code-review` | Dos ejes en paralelo: Estándares y Spec. |
+| `revision-de-cambios` | Revisa el cambio, lee las líneas eliminadas y clasifica cada hallazgo. Solo frontend. |
+| `revision-interfaz` | Orquesta las seis `mejor-*` en un único informe con veredicto. Solo frontend. |
+| `handoff` | Compacta la sesión en un documento de traspaso. |
+
+### 9 · Otras
+
+| Skill | Qué hace |
+|---|---|
+| `teach` | Explicación didáctica. |
+| `muscle-memory` | Gimnasio de katas de Python. |
+| `wait-what` | Freno de mano: para y pide que se replantee. |
+| `writing-for-agents` | Cómo escribir documentos que consume un agente. La meta-skill. |
+
+---
+
+## Los diagramas
+
+Están en [`docs/img/`](docs/img/), en Mermaid con `look: handDrawn`. El `.mmd` es la
+fuente y el `.svg` es lo que se ve en la documentación. Para regenerarlos tras editar
+un `.mmd`:
+
+```bash
+npx @mermaid-js/mermaid-cli -i docs/img/01-planificar.mmd -o docs/img/01-planificar.svg -b transparent
+```
 
 ---
 
 ## Otros destinos
 
 Para un proyecto concreto, copia la carpeta de la skill a su `.claude/skills/` y
-commitea: ahí sí viaja con el repo y la ven las sesiones en la nube.
+commitea: ahí viaja con el repo y la ven las sesiones en la nube.
 
 Para claude.ai hay que subirlas como `.zip`, una a una.

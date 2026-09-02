@@ -10,7 +10,7 @@ Este repo esta organizado en carpetas de categoria para que se entienda. El
 instalador lo aplana al copiarlo al directorio donde Claude Code mira.
 
     repo                                  ->  instalado
-    3-interfaz/animar/SKILL.md            ->  ~/.claude/skills/animar/SKILL.md
+    3-frontend/animar/SKILL.md            ->  ~/.claude/skills/animar/SKILL.md
 
 Uso
 ---
@@ -25,12 +25,10 @@ import shutil
 import sys
 
 CATEGORIAS = [
-    "0-antes-de-empezar",
-    "1-definir",
-    "2-construir",
-    "3-interfaz",
-    "4-revisar",
-    "5-cerrar-sesion",
+    "1-planificar",
+    "2-backend",
+    "3-frontend",
+    "4-revisar-y-cerrar",
     "9-otras",
 ]
 
