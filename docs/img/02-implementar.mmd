@@ -12,14 +12,18 @@ config:
     lineColor: "#3d3d42"
   flowchart:
     curve: basis
-    nodeSpacing: 50
+    nodeSpacing: 55
     rankSpacing: 60
 ---
 
 flowchart TD
-    IN(["Ticket de backend"]) --> IM["<b>implement</b><br/>un ticket, no varios"]
-    IM --> Q{"¿Aparece algo<br/>que la spec<br/>no contempla?"}
+    IN(["Una tarea de to-tickets"]) --> Q0{"¿Toca<br/>interfaz?"}
+    Q0 -->|no| IM["<b>implement</b><br/>una tarea, no varias"]
+    Q0 -->|sí| UI(["Pasa por la<br/>cadena de interfaz"])
+
+    IM --> Q{"¿Aparece algo que<br/>la spec no contempla?"}
     Q -->|"es un dato externo"| RS["<b>research</b>"]
     RS --> IM
-    Q -->|"es una decisión<br/>de producto"| BACK(["Parar y volver<br/>a la spec"])
+    Q -->|"es una decisión<br/>de producto"| BACK(["Parar.<br/>Volver a la spec"])
     Q -->|no| OUT(["Revisar"])
+    UI --> OUT

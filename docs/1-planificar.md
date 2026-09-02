@@ -109,11 +109,10 @@ Quiero rehacer el sistema de notificaciones.
 Descompone la spec en tickets accionables, cada uno resoluble de una sentada y
 revisable de un vistazo. Es lo que evita el PR de cuarenta ficheros.
 
-**Trocea separando back y front.** Un ticket que toca las dos mitades se revisa mal:
-mezcla criterios de correctitud con criterios de interfaz. Si necesita endpoint y
-pantalla, pártelo: el back primero con el contrato de la API cerrado, el front
-después contra ese contrato.
+**Separa lo que se ve de lo que no.** Una tarea que junta endpoint y pantalla se
+revisa mal: mezcla criterios de correctitud con criterios de interfaz. Pártela, y
+deja cerrado el contrato de la API antes de tocar la pantalla.
 
 ---
 
-**Siguiente:** [2 · Backend](2-backend.md) o [3 · Frontend](3-frontend.md)
+**Siguiente:** [2 · Implementar](2-implementar.md)

@@ -2,53 +2,28 @@
 
 Biblioteca personal de skills de Claude Code de Damián.
 
-El flujo sigue el método **spec-driven development**: la fuente de verdad es un
-documento escrito, no un mensaje de chat. Primero se especifica, se aclara lo que
-queda abierto y se trocea; después se implementa; al final se revisa contra lo
-especificado.
+## La filosofía: spec-driven development
 
-![Vista general del flujo](docs/img/00-flujo.svg)
+La fuente de verdad es un **documento escrito**, no un mensaje de chat. Se especifica
+qué se quiere, se cierran los huecos, se trocea, se implementa, y al final se revisa
+contra lo especificado. Cada skill de este repo ocupa un sitio en ese ciclo.
 
-| Fase | Qué pasa ahí | Documento |
-|---|---|---|
-| **1 · Planificar** | Spec, aclarar los huecos, plan y tickets. Sale un ticket, no una idea. | [`docs/1-planificar.md`](docs/1-planificar.md) |
-| **2 · Backend** | Implementar lo que no se ve. | [`docs/2-backend.md`](docs/2-backend.md) |
-| **3 · Frontend** | La cadena de diseño, de la dirección al pulido. | [`docs/3-frontend.md`](docs/3-frontend.md) |
-| **4 · Revisar y cerrar** | Revisión, con caminos distintos según back o front, y traspaso. | [`docs/4-revisar-y-cerrar.md`](docs/4-revisar-y-cerrar.md) |
-| **9 · Otras** | Lo que no encaja en el flujo. | [`docs/9-otras.md`](docs/9-otras.md) |
+![La filosofía: spec-driven development](docs/img/00-filosofia.svg)
 
-**La regla corta:** decide **qué** antes de **cómo se ve**, y **cómo se ve** antes de
-**cómo se mueve**. Revisar va al final, siempre.
+Dos cosas que hacen que esto funcione y que son las que más se saltan:
+
+- **Lo que aclaras vuelve a la spec.** Aclarar no es una conversación suelta: es
+  cerrar un hueco para poder actualizar el documento.
+- **La revisión se hace contra la spec**, no contra el gusto de quien revisa. Si el
+  código no cumple lo especificado, se vuelve a la spec, no se discute en el PR.
 
 ---
 
-## Instalación
+## 1 · Planificar
 
-```bash
-git clone https://github.com/damiangilgonzalez1995/claude-skills.git
-cd claude-skills
-python instalar.py
-```
+Todo lo anterior a escribir código. Sale una tarea, no una idea.
 
-> **Por qué hace falta un instalador y no basta con clonar en `~/.claude/skills`**
-> Claude Code descubre las skills personales en `~/.claude/skills/<nombre>/SKILL.md`,
-> **a un solo nivel**. Una skill dentro de una subcarpeta de categoría no se
-> descubre: al invocarla responde `Unknown skill` (comprobado, no supuesto).
->
-> Por eso el repo va organizado en carpetas y el instalador lo **aplana** al copiarlo:
-> `3-frontend/animar/` acaba en `~/.claude/skills/animar/`.
->
-> Consecuencia: `~/.claude/skills/` es **salida generada**, no fuente de verdad. Edita
-> siempre aquí y vuelve a instalar. Lo que edites allí se pierde.
-
-`python instalar.py --dry-run` dice qué haría sin tocar nada.
-`--limpiar` borra además del destino lo que ya no esté en el repo.
-
----
-
-## Las skills
-
-### 1 · Planificar
+![Flujo de la fase de planificar](docs/img/01-planificar.svg)
 
 | Skill | Qué hace |
 |---|---|
@@ -58,19 +33,32 @@ python instalar.py
 | `to-questionnaire` | Convierte una decisión que no puedes tomar tú solo en un cuestionario para quien sí sabe. |
 | `prototype` | Prototipo desechable para responder una duda de diseño. |
 | `grill-with-docs` | Interroga el plan y va escribiendo los ADRs y el glosario. La que conviene por defecto. |
-| `wayfinder` | Solo si no cabe en una sesión: mapa de tickets de decisión. `/wayfinder`. |
-| `to-tickets` | Trocea la spec en tickets de una sentada. |
+| `wayfinder` | Solo si no cabe en una sesión: mapa de tickets de decisión. |
+| `to-tickets` | Trocea la spec en tareas de una sentada. |
 
-`grilling`, `grill-me` y `domain-modeling` están instaladas pero no hace falta
-invocarlas: van dentro de `grill-with-docs`.
+Cuál usar para aclarar depende de **por qué** está el hueco. El detalle, en
+[`docs/1-planificar.md`](docs/1-planificar.md).
 
-### 2 · Backend
+---
+
+## 2 · Implementar
+
+![Flujo de la fase de implementar](docs/img/02-implementar.svg)
 
 | Skill | Qué hace |
 |---|---|
-| `implement` | Ejecuta un ticket. Uno, no varios. |
+| `implement` | Ejecuta una tarea. Una, no varias. |
 
-### 3 · Frontend
+Detalle en [`docs/2-implementar.md`](docs/2-implementar.md).
+
+---
+
+## 3 · Interfaz
+
+Cuando la tarea toca pantalla, además de `implement` pasa por esta cadena. Dieciséis
+skills que se solapan entre sí: el documento existe para saber cuál toca.
+
+![Flujo de la cadena de interfaz](docs/img/03-interfaz.svg)
 
 | Skill | Qué hace | Origen |
 |---|---|---|
@@ -91,20 +79,31 @@ invocarlas: van dentro de `grill-with-docs`.
 | `vocabulario-animacion` | Glosario inverso: convierte "eso que rebota al abrirse" en el término exacto. | Emil Kowalski |
 | `video-a-superprompt` | Convierte un vídeo de referencia en un prompt de recreación detallado. | Meng To |
 
-Las de diseño están traducidas al español. Los ficheros de `references/` y los
-`scripts/` se conservan en inglés a propósito, porque los propios `SKILL.md` los
-citan por ruta.
+Están traducidas al español. Los ficheros de `references/` y los `scripts/` se
+conservan en inglés a propósito, porque los propios `SKILL.md` los citan por ruta.
 
-### 4 · Revisar y cerrar
+Detalle y atajos en [`docs/3-interfaz.md`](docs/3-interfaz.md).
+
+---
+
+## 4 · Revisar y cerrar
+
+![Flujo de la fase de revisar y cerrar](docs/img/04-revisar.svg)
 
 | Skill | Qué hace |
 |---|---|
 | `code-review` | Dos ejes en paralelo: Estándares y Spec. |
-| `revision-de-cambios` | Revisa el cambio, lee las líneas eliminadas y clasifica cada hallazgo. Solo frontend. |
-| `revision-interfaz` | Orquesta las seis `mejor-*` en un único informe con veredicto. Solo frontend. |
+| `revision-de-cambios` | Revisa el cambio, lee las líneas eliminadas y clasifica cada hallazgo. Solo si tocó interfaz. |
+| `revision-interfaz` | Orquesta las seis `mejor-*` en un único informe con veredicto. Solo si tocó interfaz. |
 | `handoff` | Compacta la sesión en un documento de traspaso. |
 
-### 9 · Otras
+Detalle en [`docs/4-revisar-y-cerrar.md`](docs/4-revisar-y-cerrar.md).
+
+---
+
+## 9 · Otras
+
+Lo que no encaja en el ciclo. Detalle en [`docs/9-otras.md`](docs/9-otras.md).
 
 | Skill | Qué hace |
 |---|---|
@@ -113,23 +112,32 @@ citan por ruta.
 | `wait-what` | Freno de mano: para y pide que se replantee. |
 | `writing-for-agents` | Cómo escribir documentos que consume un agente. La meta-skill. |
 
+`grilling`, `grill-me` y `domain-modeling` están instaladas pero no hace falta
+invocarlas: van dentro de `grill-with-docs`.
+
 ---
 
-## Los diagramas
-
-Están en [`docs/img/`](docs/img/), en Mermaid con `look: handDrawn`. El `.mmd` es la
-fuente y el `.svg` es lo que se ve en la documentación. Para regenerarlos tras editar
-un `.mmd`:
+## Instalación
 
 ```bash
-npx @mermaid-js/mermaid-cli -i docs/img/01-planificar.mmd -o docs/img/01-planificar.svg -b transparent
+git clone https://github.com/damiangilgonzalez1995/claude-skills.git
+cd claude-skills
+python instalar.py
 ```
 
----
+> **Por qué hace falta un instalador y no basta con clonar en `~/.claude/skills`**
+> Claude Code descubre las skills personales en `~/.claude/skills/<nombre>/SKILL.md`,
+> **a un solo nivel**. Una skill dentro de una subcarpeta de categoría no se
+> descubre: al invocarla responde `Unknown skill` (comprobado, no supuesto).
+>
+> Por eso el repo va organizado en carpetas y el instalador lo **aplana** al copiarlo:
+> `3-interfaz/animar/` acaba en `~/.claude/skills/animar/`.
+>
+> Consecuencia: `~/.claude/skills/` es **salida generada**, no fuente de verdad. Edita
+> siempre aquí y vuelve a instalar. Lo que edites allí se pierde.
 
-## Otros destinos
+`python instalar.py --dry-run` dice qué haría sin tocar nada.
+`--limpiar` borra además del destino lo que ya no esté en el repo.
 
 Para un proyecto concreto, copia la carpeta de la skill a su `.claude/skills/` y
-commitea: ahí viaja con el repo y la ven las sesiones en la nube.
-
-Para claude.ai hay que subirlas como `.zip`, una a una.
+commitea. Para claude.ai hay que subirlas como `.zip`, una a una.

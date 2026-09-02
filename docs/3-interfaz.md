@@ -1,4 +1,4 @@
-# 3 · Frontend
+# 3 · Interfaz
 
 Dieciséis skills, y ese es el problema: se solapan. Este documento existe para que no
 tengas que leerlas todas para saber cuál toca.
@@ -6,7 +6,7 @@ tengas que leerlas todas para saber cuál toca.
 **El orden, en una línea:** qué dice → cómo se ve → cómo se mueve → pulido →
 originalidad → psicología.
 
-![Flujo de la fase de frontend](img/03-frontend.svg)
+![Flujo de la cadena de interfaz](img/03-interfaz.svg)
 
 ---
 

@@ -12,19 +12,20 @@ config:
     lineColor: "#3d3d42"
   flowchart:
     curve: basis
-    nodeSpacing: 50
+    nodeSpacing: 55
     rankSpacing: 60
 ---
 
 flowchart TD
-    IN{"¿De dónde<br/>vienes?"}
-    IN -->|backend| CR
-    IN -->|frontend| RC["<b>revision-de-cambios</b><br/>¿he roto algo?"]
+    IN(["Trabajo terminado"]) --> Q0{"¿Ha tocado<br/>interfaz?"}
+
+    Q0 -->|sí| RC["<b>revision-de-cambios</b><br/>¿he roto algo que funcionaba?"]
     RC --> RI["<b>revision-interfaz</b><br/>¿la pantalla está bien?"]
-    RI --> CR["<b>code-review</b><br/>¿hace lo que pedía la spec?"]
+    RI --> CR
+    Q0 -->|no| CR["<b>code-review</b><br/>¿hace lo que pedía la spec?"]
 
     CR --> Q{"¿Queda alguna<br/>severidad ALTA?"}
-    Q -->|sí| FIX(["Arreglar<br/>y repetir"])
+    Q -->|sí| FIX(["Arreglar y repetir"])
     FIX --> IN
-    Q -->|no| HO["<b>handoff</b><br/>traspaso para la<br/>siguiente sesión"]
-    HO --> OUT(["Siguiente ticket"])
+    Q -->|no| HO["<b>handoff</b><br/>traspaso para<br/>la siguiente sesión"]
+    HO --> OUT(["Siguiente tarea"])

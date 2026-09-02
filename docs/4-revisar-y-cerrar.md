@@ -1,6 +1,6 @@
 # 4 · Revisar y cerrar
 
-El camino no es el mismo según vengas del backend o del frontend.
+El camino depende de si el trabajo ha tocado interfaz o no.
 
 ![Flujo de la fase de revisar y cerrar](img/04-revisar.svg)
 
@@ -23,11 +23,11 @@ revisión de estilo. El segundo eje es el que lo caza, y es el que se olvida.
 Desde main.
 ```
 
-En backend es la única que necesitas. En frontend va la última.
+Si el trabajo no ha tocado interfaz, es la única que necesitas. Si la ha tocado, va la última.
 
 ---
 
-## `revision-de-cambios` — solo frontend, y va primero
+## `revision-de-cambios` — solo si tocó interfaz, y va primero
 
 **Qué mira.** El **cambio**, no la pantalla. Resuelve el alcance contra el
 merge-base, expande los ficheros tocados a las superficies donde se renderizan, y
@@ -56,7 +56,7 @@ Sin argumentos revisa lo que tengas sin commitear. Es de solo lectura.
 
 ---
 
-## `revision-interfaz` — solo frontend
+## `revision-interfaz` — solo si tocó interfaz
 
 **Qué mira.** La pantalla. Enruta a las seis `mejor-*` en orden, consolida en **una**
 tabla ordenada por severidad y emite un veredicto.
@@ -90,13 +90,13 @@ duradera va a un ADR vía `grill-with-docs`, no a un traspaso que se lee una vez
 
 ## Resumen
 
-| Vienes de | Orden |
+| El trabajo | Orden |
 |---|---|
-| **Backend** | `code-review` → `handoff` |
-| **Frontend** | `revision-de-cambios` → `revision-interfaz` → `code-review` → `handoff` |
+| **No tocó interfaz** | `code-review` → `handoff` |
+| **Tocó interfaz** | `revision-de-cambios` → `revision-interfaz` → `code-review` → `handoff` |
 
-En frontend el orden no es capricho: primero qué has roto, luego cómo está la
-pantalla, y al final si hace lo que pedía la spec.
+Cuando tocó interfaz el orden no es capricho: primero qué has roto, luego cómo está
+la pantalla, y al final si hace lo que pedía la spec.
 
-**Anterior:** [2 · Backend](2-backend.md) o [3 · Frontend](3-frontend.md) ·
+**Anterior:** [2 · Implementar](2-implementar.md) o [3 · Interfaz](3-interfaz.md) ·
 **Fuera del flujo:** [9 · Otras](9-otras.md)
