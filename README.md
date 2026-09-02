@@ -7,8 +7,8 @@ Biblioteca personal de skills de Claude Code de Damián.
 Las skills están agrupadas por la fase del trabajo en la que se usan:
 
 ```
-0-antes-de-empezar/   wayfinder, grilling, grill-with-docs, grill-me,
-                      research, domain-modeling
+0-antes-de-empezar/   wayfinder, grilling, grill-with-docs, research
+                      (+ domain-modeling y grill-me, que usa grill-with-docs)
 1-definir/            to-spec, to-tickets, prototype
 2-construir/          implement
 3-interfaz/           ingeniero-diseno-web, diseno-landing, sitios-calidad-premio,
@@ -50,73 +50,32 @@ python instalar.py
 
 ## El flujo
 
-De la idea al código, en orden. Cada fase tiene su documento con el detalle.
+Vista general. Cada fase tiene su documento con su propio diagrama y el detalle.
 
 ```mermaid
-flowchart TD
-    subgraph F0["0 · Antes de escribir nada"]
-        WF["wayfinder<br/>esfuerzo grande, varias sesiones"]
-        GR["grilling<br/>poner a prueba la idea"]
-        RS["research<br/>investigar contra fuentes"]
-        DM["domain-modeling<br/>fijar el vocabulario"]
-    end
-
-    subgraph F1["1 · Definir"]
-        SP["to-spec"]
-        TK["to-tickets"]
-        PR["prototype<br/>responder una duda de diseño"]
-    end
-
-    subgraph F2["2 · Construir"]
-        IM["implement"]
-    end
-
-    subgraph F3["3 · Interfaz"]
-        direction TB
-        IDW["ingeniero-diseno-web<br/>dirección y sistema"]
-        SCP["sitios-calidad-premio<br/>si toca espectáculo"]
-        AN["animar"]
-        MJ["las seis mejor-*"]
-        TM["tastemaker<br/>que no parezca de IA"]
-        LY["leyes-de-percepcion<br/>leyes-de-retencion"]
-        IDW --> SCP --> AN --> MJ --> TM --> LY
-    end
-
-    subgraph F4["4 · Revisar"]
-        CR["code-review"]
-        RI["revision-interfaz"]
-        RC["revision-de-cambios"]
-    end
-
-    subgraph F5["5 · Cerrar sesión"]
-        HO["handoff"]
-    end
-
-    WF --> SP
-    GR --> SP
-    RS -.apoya.-> SP
-    DM -.apoya.-> SP
-    SP --> TK --> IM
-    PR -.apoya.-> IM
-    IM --> F3
+flowchart LR
+    F0["0 · Antes de empezar"] --> F1["1 · Definir"]
+    F1 --> Q{"Backend<br/>o frontend?"}
+    Q -->|backend| F2["2 · Backend"]
+    Q -->|frontend| F3["3 · Frontend"]
+    F2 --> F4["4 · Revisar"]
     F3 --> F4
-    F4 --> HO
+    F4 --> F5["5 · Cerrar sesión"]
+    F5 -.siguiente sesión.-> F1
 ```
 
-| Fase | Skills | Documento |
+| Fase | Documento | De qué va |
 |---|---|---|
-| **0 · Antes de escribir nada** | `wayfinder` `grilling` `grill-with-docs` `grill-me` `research` `domain-modeling` | [`docs/00-antes-de-empezar.md`](docs/00-antes-de-empezar.md) |
-| **1 · Definir** | `to-spec` `to-tickets` `prototype` | [`docs/01-definir.md`](docs/01-definir.md) |
-| **2 · Construir** | `implement` | [`docs/02-construir.md`](docs/02-construir.md) |
-| **3 · Interfaz** | `ingeniero-diseno-web` `diseno-landing` `sitios-calidad-premio` `animar` `diseno-apple` las seis `mejor-*` `tastemaker` `leyes-de-percepcion` `leyes-de-retencion` `vocabulario-animacion` `video-a-superprompt` | [`docs/03-interfaz.md`](docs/03-interfaz.md) |
-| **4 · Revisar** | `code-review` `revision-interfaz` `revision-de-cambios` | [`docs/04-revisar.md`](docs/04-revisar.md) |
-| **5 · Cerrar sesión** | `handoff` | [`docs/05-cerrar-sesion.md`](docs/05-cerrar-sesion.md) |
-| **Otras** | `teach` `muscle-memory` `claude-project-setup` `writing-for-agents` `wait-what` `to-questionnaire` | [`docs/99-sueltas.md`](docs/99-sueltas.md) |
+| **0 · Antes de empezar** | [`docs/00-antes-de-empezar.md`](docs/00-antes-de-empezar.md) | Certeza sobre qué construir, antes de escribir nada |
+| **1 · Definir** | [`docs/01-definir.md`](docs/01-definir.md) | Spec y tickets: convertir lo decidido en algo implementable |
+| **2 · Backend** | [`docs/02-backend.md`](docs/02-backend.md) | Implementar la parte que no se ve |
+| **3 · Frontend** | [`docs/03-frontend.md`](docs/03-frontend.md) | La cadena de interfaz, de la dirección al pulido |
+| **4 · Revisar** | [`docs/04-revisar.md`](docs/04-revisar.md) | Dos caminos distintos según sea back o front |
+| **5 · Cerrar sesión** | [`docs/05-cerrar-sesion.md`](docs/05-cerrar-sesion.md) | Traspaso para no perder el contexto |
+| **Otras** | [`docs/99-otras.md`](docs/99-otras.md) | Lo que no encaja en la cadena |
 
 **La regla corta:** decide **qué** antes de **cómo se ve**, y **cómo se ve** antes de
 **cómo se mueve**. Revisar va al final, siempre.
-
----
 
 ## Las tres del principio, que son las que más se saltan
 
@@ -134,9 +93,8 @@ flowchart TD
 |---|---|
 | `wayfinder` | Planifica un esfuerzo enorme (más de una sesión) como un mapa de tickets de decisión que se resuelven de uno en uno. Solo `/wayfinder`. |
 | `grilling` | Interroga sin tregua un plan, decisión o idea. |
-| `grill-with-docs` | Grilling apoyado en documentación. |
+| `grill-with-docs` | `grilling` + `domain-modeling`: interroga el plan y va escribiendo los ADRs y el glosario. La que conviene usar por defecto. |
 | `research` | Investiga contra fuentes primarias y deja los hallazgos como Markdown en el repo. |
-| `domain-modeling` | Construye y afina el modelo de dominio y el lenguaje ubicuo. |
 | `to-spec` | Convierte una idea o petición en una spec. |
 | `to-tickets` | Descompone una spec en tickets accionables. |
 | `prototype` | Prototipo desechable para responder una pregunta de diseño. |
@@ -174,7 +132,7 @@ propósito, porque los propios `SKILL.md` los citan por ruta.
 | `vocabulario-animacion` | Glosario inverso: convierte "eso que rebota al abrirse" en el término exacto. | Emil Kowalski |
 | `video-a-superprompt` | Convierte un vídeo de referencia en un prompt de recreación detallado. | Meng To |
 
-Cuál usar de las que se solapan, en [`docs/03-interfaz.md`](docs/03-interfaz.md).
+Cuál usar de las que se solapan, en [`docs/03-frontend.md`](docs/03-frontend.md).
 
 ---
 

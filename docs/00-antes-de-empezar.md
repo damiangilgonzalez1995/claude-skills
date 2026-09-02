@@ -1,21 +1,44 @@
-# Fase 0 · Antes de escribir nada
+# Fase 0 · Antes de empezar
 
-La fase que más se salta y la que más caro sale saltarse. Aquí no se produce
-código: se produce **certeza sobre qué hay que construir**.
+La fase que más se salta y la que más caro sale saltarse. Aquí no se produce código:
+se produce **certeza sobre qué hay que construir**.
 
-Señal de que te la has saltado: a mitad de la implementación descubres un requisito
-que cambia el diseño entero.
+Señal de que te la has saltado: a mitad de la implementación aparece un requisito que
+cambia el diseño entero.
+
+```mermaid
+flowchart TD
+    START(["Tengo algo que construir"]) --> Q1{"¿Cabe en<br/>una sesión?"}
+
+    Q1 -->|no| WF["<b>wayfinder</b><br/>mapa de tickets de decisión"]
+    Q1 -->|sí| Q2{"¿Tengo un plan<br/>o solo una idea?"}
+
+    WF --> Q2
+
+    Q2 -->|"tengo un plan"| Q3{"¿Quiero que quede<br/>documentado?"}
+    Q2 -->|"solo una idea"| Q4{"¿Me falta<br/>algún dato?"}
+
+    Q3 -->|sí| GWD["<b>grill-with-docs</b><br/>interroga y va escribiendo<br/>ADRs y glosario"]
+    Q3 -->|no| GR["<b>grilling</b><br/>interroga a secas"]
+
+    Q4 -->|sí| RS["<b>research</b><br/>investiga contra fuentes<br/>y lo deja escrito"]
+    Q4 -->|no| OUT
+
+    GWD --> OUT(["Fase 1 · Definir"])
+    GR --> OUT
+    RS --> Q2
+```
 
 ---
 
 ## `wayfinder`
 
-**Cuándo.** El trabajo no cabe en una sesión. Hablamos de varios días, varias
-personas, o algo que va a atravesar media aplicación.
+**Cuándo.** El trabajo no cabe en una sesión: varios días, varias personas, o algo
+que atraviesa media aplicación.
 
 **Qué hace.** Convierte el esfuerzo en un mapa de tickets de **decisión**, no de
-tareas. Cada ticket es una pregunta que hay que cerrar, y se resuelven de uno en
-uno. El tracker son GitHub Issues.
+tareas. Cada ticket es una pregunta que hay que cerrar, y se resuelven de uno en uno.
+El tracker son GitHub Issues.
 
 **Por qué importa.** Sin esto, a la tercera sesión nadie sabe qué queda pendiente ni
 por qué se decidió lo que se decidió. El mapa sobrevive a que se acabe el contexto.
@@ -38,8 +61,8 @@ defendiendo un rato sin que nadie la haya atacado en serio.
 
 **Qué hace.** Te interroga sin tregua. No busca ayudarte: busca los agujeros.
 
-**Por qué importa.** Es más barato que se caiga el plan aquí que después de tres
-días de implementación.
+**Por qué importa.** Es más barato que se caiga el plan aquí que después de tres días
+de implementación.
 
 ```
 /grilling
@@ -47,27 +70,43 @@ días de implementación.
 Voy a migrar el estado del frontend a un store global. Ponme a prueba.
 ```
 
-**Variante:** `grill-with-docs` hace lo mismo pero apoyándose en documentación
-concreta, cuando la discusión depende de cómo funciona de verdad una herramienta y
-no de opiniones.
+---
 
-**Variante:** `grill-me` es el atajo. Solo `/grill-me`, sin argumentos: llama a
-`grilling` sobre lo que estéis discutiendo en ese momento, sin que tengas que
-reformular el plan.
+## `grill-with-docs`
+
+**Cuándo.** Igual que `grilling`, pero cuando quieres que del interrogatorio salga
+documentación y no solo una conversación.
+
+**Qué hace.** Lanza `grilling` apoyándose en `domain-modeling`: mientras te interroga
+va escribiendo los ADRs y el glosario del proyecto.
+
+**Por qué es la que deberías usar casi siempre.** Una sesión de `grilling` a secas
+resuelve el plan y se evapora. Esta deja el porqué escrito donde alguien lo va a
+encontrar dentro de seis meses.
+
+```
+/grill-with-docs
+
+En ATI, "incidencia", "parte" y "OT" se usan mezclados y vamos a tocar el modelo.
+```
+
+> `domain-modeling` y `grill-me` están en el repo pero no hace falta invocarlos a
+> mano: `grill-with-docs` ya usa el primero, y el segundo es solo un atajo a
+> `grilling` sin argumentos.
 
 ---
 
 ## `research`
 
-**Cuándo.** Necesitas hechos, no opiniones. Cómo funciona de verdad una API, qué
-dice la especificación, qué cambió en una versión.
+**Cuándo.** Necesitas hechos, no opiniones. Cómo funciona de verdad una API, qué dice
+la especificación, qué cambió en una versión.
 
 **Qué hace.** Investiga contra fuentes primarias de alta confianza y deja los
-hallazgos como un fichero Markdown en el repo. Puede correr en segundo plano
-mientras tú sigues con otra cosa.
+hallazgos como un fichero Markdown en el repo. Puede correr en segundo plano mientras
+tú sigues con otra cosa.
 
-**Por qué importa.** El hallazgo queda escrito y fechado en el repo. La próxima vez
-que surja la duda, la respuesta ya está y no hay que volver a buscarla.
+**Por qué importa.** El hallazgo queda escrito y fechado. La próxima vez que surja la
+duda, la respuesta ya está.
 
 ```
 /research
@@ -78,36 +117,16 @@ usa el pooler en vez de la conexión directa?
 
 ---
 
-## `domain-modeling`
-
-**Cuándo.** El equipo llama a la misma cosa de tres maneras. O estás a punto de
-nombrar una entidad nueva y no tienes claro si ya existe con otro nombre.
-
-**Qué hace.** Construye y afina el modelo de dominio y el lenguaje ubicuo del
-proyecto, y registra las decisiones de arquitectura.
-
-**Por qué importa.** Los nombres son la parte del código más cara de cambiar
-después. Media hora aquí ahorra un refactor entero.
-
-```
-/domain-modeling
-
-En ATI, "incidencia", "parte", "OT" y "tarea" se usan mezclados. Fija el vocabulario.
-```
-
----
-
-## Cómo elegir entre las cuatro
+## Resumen
 
 | Tu situación | Skill |
 |---|---|
-| No sé por dónde empezar, esto es enorme | `wayfinder` |
-| Ya tengo un plan y quiero que lo destroces | `grilling` |
+| Esto es enorme y no sé por dónde empezar | `wayfinder` |
+| Tengo un plan y quiero que lo destroces | `grilling` |
+| Igual, pero quiero que quede documentado | `grill-with-docs` |
 | Me falta un dato y no me lo quiero inventar | `research` |
-| Tenemos lío con los nombres | `domain-modeling` |
-| Estamos discutiendo algo ahora mismo y quiero que lo ataques | `grill-me` |
 
-No son excluyentes. Lo normal en algo grande es `wayfinder` primero, y luego
-`research` o `grilling` dentro de cada ticket del mapa.
+Lo normal en algo grande: `wayfinder` primero, y luego `grill-with-docs` o `research`
+dentro de cada ticket del mapa.
 
-**Siguiente fase:** [01 · Definir](01-definir.md)
+**Siguiente:** [01 · Definir](01-definir.md)

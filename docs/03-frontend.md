@@ -1,34 +1,60 @@
-# Fase 3 · Interfaz
+# Fase 3 · Frontend
 
-Catorce skills, y ese es el problema: se solapan. Este documento existe para que no
+Dieciséis skills, y ese es el problema: se solapan. Este documento existe para que no
 tengas que leerlas todas para saber cuál toca.
 
 **El orden, en una línea:** qué dice → cómo se ve → cómo se mueve → pulido →
 originalidad → psicología.
 
-```
-ingeniero-diseno-web  ->  sitios-calidad-premio  ->  animar
-                                                       |
-                                                       v
-                          leyes-*  <-  tastemaker  <-  mejor-*
+```mermaid
+flowchart TD
+    IN(["Ticket de frontend"]) --> P1
+
+    subgraph P1["Paso 1 · Dirección"]
+        Q1{"¿Qué construyes?"}
+        Q1 -->|"una landing"| DL["<b>diseno-landing</b>"]
+        Q1 -->|"otra cosa"| IDW["<b>ingeniero-diseno-web</b>"]
+        Q1 -->|"no sé qué aspecto quiero"| IDW
+    end
+
+    P1 --> Q2{"¿Es una pieza<br/>cinematográfica?"}
+    Q2 -->|sí| SCP["<b>sitios-calidad-premio</b><br/>GSAP, scroll suave, Three.js"]
+    Q2 -->|"no, es una<br/>herramienta"| P3
+    SCP --> P3
+
+    subgraph P3["Paso 3 · Movimiento"]
+        AN["<b>animar</b><br/>pasa la puerta de frecuencia"]
+        AN --> Q3{"¿Hay gestos,<br/>arrastre, hojas?"}
+        Q3 -->|sí| DA["<b>diseno-apple</b><br/>muelles e interrumpibilidad"]
+        Q3 -->|no| SKIP[" "]
+    end
+
+    P3 --> RI["<b>revision-interfaz</b><br/>orquesta las seis mejor-*"]
+    RI --> TM["<b>tastemaker</b><br/>que no parezca de IA"]
+    TM --> LY["<b>leyes-de-percepcion</b><br/><b>leyes-de-retencion</b>"]
+    LY --> OUT(["Fase 4 · Revisar<br/>camino frontend"])
+
+    style SKIP fill:none,stroke:none
 ```
 
 ---
 
 ## Paso 1 · Dirección y estructura
 
-Aquí se decide **qué es** la pantalla. Elige **una** de estas tres según lo que
-construyas, no las tres:
+Aquí se decide **qué es** la pantalla. Elige **una** de estas dos, no las dos:
 
 | Construyes | Skill | Por qué esa |
 |---|---|---|
-| Una landing | `diseno-landing` | Es la única que habla de negocio: una oferta, objeciones, FAQ, reversión de riesgo, SEO. Además su Parte B ya trae las reglas visuales, así que no necesitas nada más. |
-| Cualquier otra cosa (dashboard, prototipo, presentación, visualización) | `ingeniero-diseno-web` | Dirección de arte, design system declarado, 25 recetas ancladas y puntos de control que te frenan a confirmar. |
-| No sabes qué aspecto quieres | `ingeniero-diseno-web` | Su asesor de dirección te propone tres escuelas distintas con referencias reales. Eliges, y vuelves a la que tocaba. |
+| Una landing | `diseno-landing` | Es la única que habla de negocio: una oferta, objeciones, FAQ, reversión de riesgo, SEO. Su Parte B ya trae las reglas visuales, así que no necesitas nada más. |
+| Cualquier otra cosa: dashboard, prototipo, presentación, visualización | `ingeniero-diseno-web` | Dirección de arte, design system declarado, 25 recetas ancladas y puntos de control que te frenan a confirmar. |
 
 **Para una landing no uses `ingeniero-diseno-web`.** `diseno-landing` ya la cubre
 entera. Se solapan porque son de autores distintos que resolvieron lo mismo a su
 manera.
+
+**Si no sabes qué aspecto quieres:** `ingeniero-diseno-web` tiene un asesor de
+dirección que te propone tres escuelas distintas con referencias reales. Eliges, y
+vuelves a la que tocaba.
 
 ---
 
@@ -42,7 +68,8 @@ tiene que impresionar. GSAP, scroll suave, Three.js.
 **Cuándo NO.** Un dashboard, una herramienta interna, cualquier cosa que se use a
 diario. Ahí el espectáculo es un coste que se paga en cada uso.
 
-Es la más cara de las catorce en esfuerzo y en rendimiento. Sáltatela sin remordimiento.
+Es la más cara de las dieciséis en esfuerzo y en rendimiento. Sáltatela sin
+remordimiento.
 
 ---
 
@@ -54,7 +81,7 @@ Es la más cara de las catorce en esfuerzo y en rendimiento. Sáltatela sin remo
 
 **Qué la hace distinta.** Antes de escribir código pasa una **puerta de frecuencia**:
 si el usuario va a ver eso cien veces al día, la respuesta correcta es no animarlo.
-Es la única skill de las catorce diseñada para producir a veces cero líneas de código.
+Es la única skill diseñada para producir a veces cero líneas de código.
 
 ### `diseno-apple`
 
@@ -103,8 +130,8 @@ puntual de su terreno ("qué espaciado le falta a esto").
 
 ### `tastemaker`
 
-Va al final porque necesita que exista algo que auditar, y va **antes** que las leyes
-porque cambia estructura, no solo detalles.
+Va después del pulido porque necesita que exista algo que auditar, y **antes** que
+las leyes porque cambia estructura, no solo detalles.
 
 Ataca lo que hace que todas las webs generadas se parezcan: mide el color de píxeles
 reales, genera la paleta en vez de elegirla de una lista, y rota la forma de página
@@ -131,7 +158,7 @@ prueba de entrecerrar los ojos.
 ### `leyes-de-retencion`
 
 Nueve leyes, cada una explicando una clase distinta de abandono. Su tabla de
-síntoma → ley es lo más rentable de las catorce:
+síntoma → ley es lo más rentable de las dieciséis:
 
 | Síntoma | Ley |
 |---|---|
@@ -152,10 +179,10 @@ síntoma → ley es lo más rentable de las catorce:
 | Situación | Cadena |
 |---|---|
 | Landing nueva | `diseno-landing` → `animar` → `revision-interfaz` |
-| Dashboard nuevo | `ingeniero-diseno-web` → `mejor-accesibilidad` → `revision-interfaz` |
+| Dashboard nuevo | `ingeniero-diseno-web` → `revision-interfaz` |
 | Pantalla que "parece de IA" | `tastemaker` (auditar) → `leyes-de-percepcion` |
 | Un flujo pierde usuarios | `leyes-de-retencion` → `mejor-redaccion` → `mejor-accesibilidad` |
 | Solo quiero pulir lo que hay | `revision-interfaz` |
 
-**Anterior:** [02 · Construir](02-construir.md) ·
+**Anterior:** [01 · Definir](01-definir.md) ·
 **Siguiente:** [04 · Revisar](04-revisar.md)

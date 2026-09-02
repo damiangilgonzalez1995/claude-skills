@@ -2,6 +2,20 @@
 
 Una sola skill, y es la que más rendimiento da por el poco tiempo que cuesta.
 
+```mermaid
+flowchart TD
+    IN(["Fin de la sesión"]) --> Q{"¿Queda trabajo<br/>a medias?"}
+
+    Q -->|no| Q2{"¿Se tomaron decisiones<br/>que no están en<br/>ningún commit?"}
+    Q -->|sí| HO["<b>handoff</b><br/>qué se hizo, qué se decidió,<br/>qué queda y dónde está"]
+
+    Q2 -->|sí| HO
+    Q2 -->|no| FIN(["Cerrar sin más"])
+
+    HO --> NEXT(["Siguiente sesión:<br/>le pasas el documento<br/>y arrancas con el contexto"])
+    NEXT -.-> F1(["Fase 1 · Definir"])
+```
+
 ---
 
 ## `handoff`
@@ -42,4 +56,4 @@ con el mismo contexto sin haber gastado la mitad del presupuesto en reconstruirl
 duradera va a un ADR o a `domain-modeling`, no a un traspaso que se lee una vez.
 
 **Anterior:** [04 · Revisar](04-revisar.md) ·
-**Fuera del flujo:** [99 · Sueltas](99-sueltas.md)
+**Fuera del flujo:** [99 · Otras](99-otras.md)

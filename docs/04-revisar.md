@@ -1,11 +1,29 @@
 # Fase 4 · Revisar
 
-Tres skills de revisión que miran cosas distintas. Se pueden pasar las tres sobre el
-mismo trabajo sin que se pisen.
+Tres skills que miran cosas distintas. El camino no es el mismo según vengas del
+backend o del frontend.
+
+```mermaid
+flowchart TD
+    IN{"¿De dónde<br/>vienes?"}
+
+    IN -->|backend| B1["<b>code-review</b><br/>dos ejes: Estándares y Spec"]
+
+    IN -->|frontend| F1["<b>revision-de-cambios</b><br/>¿he roto algo que funcionaba?"]
+    F1 --> F2["<b>revision-interfaz</b><br/>¿la pantalla está bien?"]
+    F2 --> F3["<b>code-review</b><br/>¿hace lo que pedía la spec?"]
+
+    B1 --> Q{"¿Queda alguna<br/>severidad ALTA?"}
+    F3 --> Q
+
+    Q -->|sí| FIX(["Arreglar y volver a pasar"])
+    FIX --> IN
+    Q -->|no| OUT(["Fase 5 · Cerrar sesión"])
+```
 
 ---
 
-## `code-review`
+## `code-review` — el camino común
 
 **Qué mira.** El código, en dos ejes independientes que corren en subagentes
 paralelos:
@@ -24,31 +42,12 @@ Desde main.
 
 Acepta un punto fijo: un commit, una rama, un tag o un merge-base.
 
----
-
-## `revision-interfaz`
-
-**Qué mira.** La pantalla. Enruta a las seis `mejor-*` en orden (accesibilidad,
-layout, redacción, tipografía, color, acabado), consolida en **una** tabla ordenada
-por severidad y emite un veredicto.
-
-**Cuándo.** Cuando el trabajo toca interfaz. Es la forma correcta de usar las seis:
-a mano y una a una salen seis informes inconexos.
-
-**Lo que la hace fiable.** Tiene disparadores de escalado que son ALTA a la vista, sin
-promediar: un control sin nombre accesible, foco invisible, movimiento que ignora
-`prefers-reduced-motion`, contenido recortado a 320px, significado transmitido solo
-por color.
-
-```
-/revision-interfaz
-
-Revisa la pantalla de reserva.
-```
+**En backend es la única que necesitas.** En frontend va la última, después de las
+dos de interfaz.
 
 ---
 
-## `revision-de-cambios`
+## `revision-de-cambios` — solo frontend, y va primero
 
 **Qué mira.** El **cambio**, no la pantalla. Resuelve el alcance contra el
 merge-base, expande los ficheros tocados a las superficies donde se renderizan, y
@@ -65,6 +64,10 @@ completa que nadie pidió.
 **Lo que hace y nadie más hace:** leer el lado `-` del diff. Las regresiones son
 invisibles mirando solo el estado final.
 
+**Por qué va antes que `revision-interfaz`.** Porque responde a otra pregunta. Esta
+dice si empeoraste algo; la otra dice si la pantalla está bien. Si empezaste por la
+segunda, te llenas el informe de problemas que ya estaban ahí.
+
 ```
 /revision-de-cambios pr 482
 ```
@@ -74,16 +77,37 @@ checkout de nada.
 
 ---
 
-## Cuál usar
+## `revision-interfaz` — solo frontend
 
-| Qué revisas | Skill |
+**Qué mira.** La pantalla. Enruta a las seis `mejor-*` en orden (accesibilidad,
+layout, redacción, tipografía, color, acabado), consolida en **una** tabla ordenada
+por severidad y emite un veredicto.
+
+**Cuándo.** Cuando el trabajo toca interfaz. Es la forma correcta de usar las seis: a
+mano y una a una salen seis informes inconexos.
+
+**Lo que la hace fiable.** Tiene disparadores de escalado que son ALTA a la vista, sin
+promediar: un control sin nombre accesible, foco invisible, movimiento que ignora
+`prefers-reduced-motion`, contenido recortado a 320px, significado transmitido solo
+por color.
+
+```
+/revision-interfaz
+
+Revisa la pantalla de reserva.
+```
+
+---
+
+## Resumen
+
+| Vienes de | Orden |
 |---|---|
-| Un PR o una rama, sea de lo que sea | `code-review` |
-| Una pantalla concreta | `revision-interfaz` |
-| Un cambio que toca interfaz, antes de abrir el PR | `revision-de-cambios` |
+| **Backend** | `code-review` |
+| **Frontend** | `revision-de-cambios` → `revision-interfaz` → `code-review` |
 
-Lo normal antes de un PR de front: `revision-de-cambios` primero (¿he roto algo?) y
-`code-review` después (¿hace lo que pedía la spec?).
+En frontend el orden no es capricho: primero qué has roto, luego cómo está la
+pantalla, y al final si hace lo que pedía la spec.
 
-**Anterior:** [03 · Interfaz](03-interfaz.md) ·
+**Anterior:** [02 · Backend](02-backend.md) o [03 · Frontend](03-frontend.md) ·
 **Siguiente:** [05 · Cerrar sesión](05-cerrar-sesion.md)
